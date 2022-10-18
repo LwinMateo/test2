@@ -1,17 +1,16 @@
 const fs = require('fs');
-const { resolve } = require('path');
 
 var students = new Array();
 
 module.exports.initialize = function(){
     return new Promise(function(resolve, reject){
-        fs.readFile('/students.jsong', (err, data) => {
+        fs.readFile('./students.json', (err, data) => {
             if(err){
                 reject("unable to read file");
             }
             students = JSON.parse(data);
             resolve();
-        })
+        });
     });
 };
 
@@ -23,7 +22,7 @@ module.exports.getBSD = function(){
         
         resolve(students);
     
-    })
+    });
 }
 
 module.exports.highGPA = function(){

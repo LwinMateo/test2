@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 
-var moduleA = require('data-service.js');
+const moduleA = require('./test2_moduleA.js');
 const { stringify } = require('querystring');
+
 
 
 var HTTP_PORT = process.env.HTTP_PORT || 8080;
@@ -13,8 +14,8 @@ function onHttpStart(){
     console.log("Express http server listening on: " + HTTP_PORT);
 }
 
-
 app.use(express.static('public'));
+
 
 app.get("/", function(req, res){
     let HTMLText = "<h2>Declaration:</h2>";
@@ -35,9 +36,7 @@ app.get("/", function(req, res){
     res.send(HTMLText);
 });
 
-app.get('/*', function(req, res){
-    res.status(404).send("Error 404: page not found");
-})
+
 
 app.get('/BSD', function(req, res){
     moduleA.getBSD().then((data) =>{
@@ -55,6 +54,10 @@ app.get('/highGPA', function(req, res){
 
         res.send(text);
     })
+})
+
+app.get('/*', function(req, res){
+    res.status(404).send("Error 404: page not found");
 })
 
 moduleA.initialize().then(function(){
